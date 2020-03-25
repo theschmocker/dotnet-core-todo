@@ -3,6 +3,14 @@ import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLi
 import { Link } from 'react-router-dom';
 import { LoginMenu } from './api-authorization/LoginMenu';
 import './NavMenu.css';
+import { useTodos } from '../state/TodoContext';
+
+function TodoNavLink() {
+  const { todos } = useTodos();
+  return (
+    <NavLink tag={Link} className="text-dark" to="/todos">Todos ({todos ? todos.filter(t => !t.done).length : 0})</NavLink>
+  )
+}
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
@@ -41,7 +49,7 @@ export class NavMenu extends Component {
                   <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/todos">Todos</NavLink>
+                  <TodoNavLink />
                 </NavItem>
                 <LoginMenu>
                 </LoginMenu>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import authService from './api-authorization/AuthorizeService'
+import authService from '../api-authorization/AuthorizeService'
 import { useTodos } from '../state/TodoContext';
 
 function Todo ({ todo, onToggle, onDelete, onUpdate }) {

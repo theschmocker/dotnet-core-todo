@@ -5,9 +5,9 @@ import { Home } from './components/Home';
 import { FetchData } from './components/FetchData';
 import { Counter } from './components/Counter';
 import Todos from './components/Todos';
-import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
-import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
-import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
+import AuthorizeRoute from './api-authorization/AuthorizeRoute';
+import ApiAuthorizationRoutes from './api-authorization/ApiAuthorizationRoutes';
+import { ApplicationPaths } from './api-authorization/ApiAuthorizationConstants';
 
 import './custom.css'
 import { TodoProvider } from './state/TodoContext';

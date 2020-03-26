@@ -4,7 +4,7 @@ import { useTodos } from '../state/TodoContext';
 import TodoList from './todos/TodoList';
 
 function Todos() {
-    const { todos, createTodo, updateTodo, deleteTodo, error, loading } = useTodos();
+    const { createTodo, error } = useTodos();
     const [text, setText] = useState('');
 
     const onSubmit = e => {
@@ -18,8 +18,6 @@ function Todos() {
         }
     }
 
-    const toggleDone = todo => updateTodo({...todo, done: !todo.done})
-
     return (
         <div className="container">
             <h1>Todos</h1>
@@ -31,13 +29,7 @@ function Todos() {
                 <button className="btn btn-primary">Add</button>
             </form>
             {error && <div className="alert alert-danger">Couldn't load latest todo list. Changes may not be saved.</div>}
-            <TodoList
-                loading={!todos && loading}
-                todos={todos}
-                onToggle={todo => toggleDone(todo)}
-                onDelete={todo => deleteTodo(todo)}
-                onUpdate={updateTodo}
-            />
+            <TodoList />
         </div>
     );
 }

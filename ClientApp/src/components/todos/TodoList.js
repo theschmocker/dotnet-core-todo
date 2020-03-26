@@ -1,9 +1,12 @@
 import React from 'react';
 
 import Todo from './Todo';
+import { useTodos } from '../../state/TodoContext';
 
-function TodoList({ loading, todos, onToggle, onDelete, onUpdate }) {
-    if (loading) {
+function TodoList() {
+    const { todos, loading } = useTodos();
+
+    if (loading && !todos) {
         return (
             <div className="spinner-grow text-primary" role="status">
                 <span className="sr-only">Loading todos</span>
@@ -15,13 +18,7 @@ function TodoList({ loading, todos, onToggle, onDelete, onUpdate }) {
         todos && todos.length ? (
             <ul className="list-group">
                     {todos.map(todo => ( 
-                        <Todo 
-                            todo={todo}
-                            onToggle={onToggle}
-                            onDelete={onDelete}
-                            onUpdate={onUpdate}
-                            key={todo.id}
-                        />
+                        <Todo todo={todo} key={todo.id} />
                     ))}
             </ul>
         ) : (

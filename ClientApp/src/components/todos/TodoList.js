@@ -4,7 +4,7 @@ import Todo from './Todo';
 import { useTodos } from '../../state/TodoContext';
 
 function TodoList() {
-    const { todos, loading } = useTodos();
+    const { todos, loading, sortOption } = useTodos();
 
     if (loading && !todos) {
         return (
@@ -22,7 +22,9 @@ function TodoList() {
                     ))}
             </ul>
         ) : (
-            <div>No todos. Have a great day!</div>
+            <div>
+                No todos. {sortOption !== 'Done' && 'Have a great day!'}
+            </div>
         )
     );
 }

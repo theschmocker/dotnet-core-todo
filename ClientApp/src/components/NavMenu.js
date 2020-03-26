@@ -6,9 +6,9 @@ import './NavMenu.css';
 import { useTodos } from '../state/TodoContext';
 
 function TodoNavLink() {
-  const { todos } = useTodos();
+  const { allTodos } = useTodos();
   return (
-    <NavLink tag={Link} className="text-dark" to="/todos">Todos ({todos ? todos.filter(t => !t.done).length : 0})</NavLink>
+    <NavLink tag={Link} className="text-dark" to="/todos">Todos ({allTodos ? allTodos.filter(t => !t.done).length : 0})</NavLink>
   )
 }
 

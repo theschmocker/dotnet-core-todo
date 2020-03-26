@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTodos } from '../state/TodoContext';
 
+import TodoSort from './todos/TodoSort';
 import TodoList from './todos/TodoList';
 
 function Todos() {
@@ -29,6 +30,7 @@ function Todos() {
                 <button className="btn btn-primary">Add</button>
             </form>
             {error && <div className="alert alert-danger">Couldn't load latest todo list. Changes may not be saved.</div>}
+            <TodoSort />
             <TodoList />
         </div>
     );

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import TodoEditor from './TodoEditor';
 import { useTodos } from '../../state/TodoContext';
+import TodoColor from './TodoColor';
 
 function Todo ({ todo }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -13,7 +14,8 @@ function Todo ({ todo }) {
 
     return (
         <li className="list-group-item d-flex align-items-center">
-            <input type="checkbox" checked={todo.done} onChange={toggleDone} />
+            <TodoColor color={todo.color} />
+            <input className="ml-2" type="checkbox" checked={todo.done} onChange={toggleDone} />
             <span className="ml-2" style={{ textDecoration: todo.done ? 'line-through' : 'none' }}>{todo.text}</span>
             <button className="btn btn-outline-secondary ml-auto" onClick={() => setIsEditing(true)}>Edit</button>
             <button className="btn btn-outline-secondary ml-1" onClick={() => deleteTodo(todo)}>Delete</button>

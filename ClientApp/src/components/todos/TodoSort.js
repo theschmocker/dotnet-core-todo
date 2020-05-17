@@ -11,7 +11,8 @@ function TodoSort() {
                 <button 
                     className={`btn flex-grow-0 flex-shrink-0 ${option === sortOption ? 'btn-primary active' : 'btn-outline-primary'}`}
                     onClick={() => setSortOption(option)}
-                    ariaPressed={option === sortOption}
+                    aria-pressed={option === sortOption}
+                    key={option}
                 >
                         {option}
                 </button>

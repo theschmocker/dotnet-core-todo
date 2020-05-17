@@ -29,18 +29,18 @@ export function TodoProvider({ children }) {
     const [sortOption, setSortOption] = useState(sortOptions[0]);
 
     async function createTodo(newTodo) {
-        await request('todo', { method: 'POST', body: newTodo})
         mutate('todo', todos => [...todos, {id: -1, ...newTodo}]);
+        await request('todo', { method: 'POST', body: newTodo})
     }
 
     async function updateTodo(todo) {
-        await request('todo', { method: 'PUT', body: todo})
         mutate('todo', todos => todos.map(t => t.id === todo.id ? todo : t));
+        await request('todo', { method: 'PUT', body: todo})
     }
 
     async function deleteTodo(todo) {
-        await request('todo', { method: 'DELETE', body: todo})
         mutate('todo', todos => todos.filter(t => t.id !== todo.id));
+        await request('todo', { method: 'DELETE', body: todo})
     }
 
     const value = {

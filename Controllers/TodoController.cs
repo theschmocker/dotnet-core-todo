@@ -1,19 +1,13 @@
-using System.ComponentModel.Design;
-using System.Transactions;
-using System.Security.Claims;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using System.Security.Principal;
 using Microsoft.EntityFrameworkCore;
 using dotnet_todo.Models;
 using dotnet_todo.Data;
 using System.Security.Claims;
-using IdentityModel;
 
 namespace dotnet_todo.Controllers
 {
@@ -30,54 +24,37 @@ namespace dotnet_todo.Controllers
         }
 
         [HttpGet]
-        // public object Get() {
-        //     return  new {
-        //         Value = "test"
-        //     };
-        // }
-        [HttpGet]
-        public async Task<object> Get() {
+        public async Task<IEnumerable<TodoJson>> Get() {
             var user = await GetUser();
-            return user.Todos.Select(t => new {
-                text = t.Text,
-                done = t.Done,
-                id = t.ID,
-            });
+            return user.Todos.Select(t => new TodoJson(t));
         }
 
         [HttpPost]
-        public async Task<object> Post(Todo todo) {
+        public async Task<TodoJson> Post(Todo todo) {
             var user = await GetUser();
 
             user.Todos.Add(todo);
             _context.SaveChanges();
 
-            return new {
-                text = todo.Text,
-                done = todo.Done,
-                id = todo.ID
-            };
+            return new TodoJson(todo);
         }
 
         [HttpPut]
-        public async Task<object> Update(Todo todo) {
+        public async Task<TodoJson> Update(Todo todo) {
             var user = await GetUser();
 
             var todoToUpdate = user.Todos.FirstOrDefault(t => t.ID == todo.ID);
 
             if (todoToUpdate == null) {
-                return todo;
+                return new TodoJson(todo);
             }
 
             todoToUpdate.Text = todo.Text;
             todoToUpdate.Done = todo.Done;
+            todoToUpdate.Color = todo.Color;
             _context.SaveChanges();
 
-            return new {
-                text = todoToUpdate.Text,
-                done = todoToUpdate.Done,
-                id = todoToUpdate.ID
-            };
+            return new TodoJson(todoToUpdate);
         }
 
         [HttpDelete]

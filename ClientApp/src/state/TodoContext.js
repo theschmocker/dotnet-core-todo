@@ -24,23 +24,35 @@ const todoSorts = {
 const sortOptions = Object.keys(todoSorts);
 
 export function TodoProvider({ children }) {
-    const { data: todos, error, isValidating } = useSwr('todo', request);
+    const { data: todos, error, isValidating, revalidate } = useSwr('todo', request);
+    const [loading, setLoading] = useState(false);
+
+    const todoRequest = async options => { 
+        setLoading(true);
+        const res = await request('todo', options);
+        setLoading(false);
+
+        return res;
+    }
 
     const [sortOption, setSortOption] = useState(sortOptions[0]);
 
     async function createTodo(newTodo) {
-        mutate('todo', todos => [...todos, {id: -1, ...newTodo}]);
-        await request('todo', { method: 'POST', body: newTodo})
+        mutate('todo', todos => [...todos, {id: -1, ...newTodo}], false);
+        await todoRequest({ method: 'POST', body: newTodo });
+        revalidate();
     }
 
     async function updateTodo(todo) {
-        mutate('todo', todos => todos.map(t => t.id === todo.id ? todo : t));
-        await request('todo', { method: 'PUT', body: todo})
+        mutate('todo', todos => todos.map(t => t.id === todo.id ? todo : t), false);
+        await todoRequest({ method: 'PUT', body: todo });
+        revalidate();
     }
 
     async function deleteTodo(todo) {
-        mutate('todo', todos => todos.filter(t => t.id !== todo.id));
-        await request('todo', { method: 'DELETE', body: todo})
+        mutate('todo', todos => todos.filter(t => t.id !== todo.id), false);
+        await todoRequest({ method: 'DELETE', body: todo });
+        revalidate();
     }
 
     const value = {
@@ -50,7 +62,7 @@ export function TodoProvider({ children }) {
         updateTodo,
         deleteTodo,
         error,
-        loading: isValidating,
+        loading: loading || isValidating,
         sortOptions,
         sortOption,
         setSortOption,

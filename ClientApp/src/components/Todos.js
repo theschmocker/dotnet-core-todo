@@ -14,14 +14,19 @@ function Todos() {
         e.preventDefault();
 
         if (text.trim().length) {
-            await createTodo({
-                text: text.trim(),
-                done: false,
-                color,
-            });
+            const todoText = text.trim();
 
-            setText('');
-            setColor(0);
+            try {
+                await createTodo({
+                    text: todoText,
+                    done: false,
+                    color,
+                });
+
+                setText('');
+                setColor(0);
+            } catch (e) {}
+
         }
     }
 
